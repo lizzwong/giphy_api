@@ -23,21 +23,30 @@ const searchController = app.controller('searchController', ['$http', '$sce', fu
         console.log('Error getting gifs', error);
       })
   } // end searchGif
-  
-function listImages(images) {
-    for (image of images) {
-        let url = $sce.trustAsResourceUrl(image.embed_url);
-        console.log(url);
-    }
-    console.log(self.gifArray);
-}
+
 
 }]); // end searchController
 
-const randomController = app.controller('randomController', ['$http', function($http){
+const randomController = app.controller('randomController', ['$http', '$sce', function($http, $sce){
     let self = this;
     console.log('Random');
-  
+    self.imageArray = [];
+
+    self.randomGif = function() {
+        console.log('in random gif');
+        $http({
+            method: 'GET',
+            url: `https://api.giphy.com/v1/gifs/random?&api_key=Jq4es5Wn9HOx3oIXG9RrWootM1W5RJOT`
+        }).then(function(response){
+            console.log('response', response.data.data);
+            let image = response.data.data;
+             let url = $sce.trustAsResourceUrl(image.embed_url);
+             self.imageArray.push(url);
+         }).catch(function(error){
+            console.log('Error getting gifs', error);
+          })
+    }
+
   }]);
 
 
