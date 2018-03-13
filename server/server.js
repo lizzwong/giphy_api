@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json()); 
 
+let env = require('dotenv');
+env.config();
+
+let giphyRouter = require('./routes/giphy_router');
+app.use('/giphy', giphyRouter);
+
 
 app.use(express.static('server/public'));
 

@@ -10,7 +10,7 @@ const searchController = app.controller('searchController', ['$http', '$sce', fu
     console.log('in search gif', searchGif);
     $http({
         method: 'GET',
-        url: `https://api.giphy.com/v1/gifs/search?q=${searchGif}&api_key=Jq4es5Wn9HOx3oIXG9RrWootM1W5RJOT`
+        url: `/giphy/:${searchGif}`
     }).then(function(response){
         console.log('response', response.data.data);
        let images = response.data.data;
@@ -36,9 +36,10 @@ const randomController = app.controller('randomController', ['$http', '$sce', fu
         console.log('in random gif');
         $http({
             method: 'GET',
-            url: `https://api.giphy.com/v1/gifs/random?&api_key=Jq4es5Wn9HOx3oIXG9RrWootM1W5RJOT`
+            url: `/giphy`
         }).then(function(response){
             console.log('response', response.data.data);
+            self.imageArray = [];
             let image = response.data.data;
              let url = $sce.trustAsResourceUrl(image.embed_url);
              self.imageArray.push(url);
